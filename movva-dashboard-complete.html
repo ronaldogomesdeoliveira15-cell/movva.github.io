@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movva Control Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root{--bg:#f3f7fc;--surface:#fff;--surface-soft:#f5f8fd;--sidebar:#0f172a;--sidebar-2:#111827;--text:#172033;--muted:#6b7280;--line:#e5e7eb;--blue:#2563eb;--blue-soft:#dbeafe;--green:#16a34a;--green-soft:#dcfce7;--red:#dc2626;--red-soft:#fee2e2;--amber:#d97706;--amber-soft:#fef3c7;--violet:#7c3aed;--violet-soft:#ede9fe;--shadow:0 18px 40px rgba(15,23,42,.08);--radius:20px}
+    *{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:linear-gradient(180deg,#eef4fb 0%,#f8fafc 100%);color:var(--text)}
+    .app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.sidebar{background:linear-gradient(180deg,var(--sidebar) 0%,var(--sidebar-2) 100%);color:#fff;padding:24px 18px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
+    .brand{display:flex;align-items:center;gap:12px}.brand-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#22c55e,#0ea5e9);font-weight:800;font-size:18px}.brand h1{margin:0;font-size:18px}.brand p{margin:3px 0 0;font-size:12px;color:rgba(255,255,255,.65)}
+    .menu,.menu-bottom{display:grid;gap:8px}.menu a,.menu-bottom a{text-decoration:none;color:rgba(255,255,255,.82);padding:12px 14px;border-radius:14px;font-size:14px;display:flex;align-items:center;gap:10px}.menu a.active,.menu a:hover,.menu-bottom a:hover{background:rgba(255,255,255,.08);color:#fff}
+    .side-block{margin-top:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px}.side-block h3{margin:0 0 8px;font-size:14px}.side-block p{margin:0 0 12px;font-size:12px;line-height:1.55;color:rgba(255,255,255,.72)}.side-block button{width:100%;border:0;border-radius:12px;padding:11px 14px;background:#fff;color:#111827;font-weight:700;cursor:pointer}
+    .main{padding:26px}.topbar{margin-bottom:18px}.topbar h2{margin:0;font-size:30px;letter-spacing:-.03em}.topbar p{margin:8px 0 0;color:var(--muted);font-size:14px}
+    .toolbar,.grid-2,.grid-3,.grid-forms{display:grid;gap:18px}.toolbar{grid-template-columns:repeat(4,minmax(140px,1fr));margin-bottom:18px}.grid-2{grid-template-columns:1fr 1fr;margin-bottom:18px}.grid-3{grid-template-columns:1fr 1fr 1fr;margin-bottom:18px}.grid-forms{grid-template-columns:1fr 1fr;margin-bottom:18px}
+    .control,.panel{background:var(--surface);box-shadow:var(--shadow);border-radius:18px}.control{padding:12px 14px}.control label{display:block;font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600}.control select,.control input,.form-grid input,.form-grid select,.form-grid textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;background:#fff;color:var(--text)}
+    .panel{padding:22px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.panel-head h3{margin:0;font-size:18px}.panel-head p{margin:6px 0 0;color:var(--muted);font-size:13px}.chip{font-size:12px;color:var(--muted);background:var(--surface-soft);padding:8px 10px;border-radius:999px}
+    
+    .hero-main h3{margin:0;font-size:15px;opacity:.88}.hero-value{font-size:38px;font-weight:800;letter-spacing:-.05em;margin-top:12px}.hero-note{margin-top:8px;font-size:13px;opacity:.84;max-width:56ch;line-height:1.55}.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.hero-mini{background:rgba(255,255,255,.1);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08)}.hero-mini span{display:block;font-size:12px;opacity:.8;margin-bottom:6px}.hero-mini strong{font-size:18px}
+    .mini-list{display:grid;gap:12px}.mini-item{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--surface-soft);border-radius:16px}.mini-item small{display:block;color:var(--muted);margin-bottom:4px}.mini-item strong{font-size:15px}.badge{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700}.ok{background:var(--green-soft);color:var(--green)}.warn{background:var(--amber-soft);color:var(--amber)}.risk{background:var(--red-soft);color:var(--red)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}.stat{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;position:relative;overflow:hidden}.stat:before{content:'';position:absolute;right:-16px;top:-16px;width:78px;height:78px;border-radius:50%;background:currentColor;opacity:.10}.stat .label{font-size:13px;color:var(--muted);display:block;margin-bottom:10px}.stat .amount{font-size:28px;font-weight:800;letter-spacing:-.04em}.stat .trend{margin-top:10px;font-size:13px;font-weight:700}.blue{color:var(--blue)}.green{color:var(--green)}.red{color:var(--red)}.violet{color:var(--violet)}
+    .form-grid{display:grid;gap:12px}.form-grid.two{grid-template-columns:1fr 1fr}.btn{border:0;border-radius:14px;padding:12px 15px;font-weight:700;font-size:14px;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:var(--surface-soft);color:var(--text)}
+    .chart-wrap{height:315px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:13px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700}.pill.in{background:var(--green-soft);color:var(--green)}.pill.out{background:var(--red-soft);color:var(--red)}.pill.high{background:var(--amber-soft);color:var(--amber)}
+    .agenda-list,.supplier-list,.category-list{display:grid;gap:12px}.agenda-item,.supplier-card,.category-item{padding:14px;border-radius:18px;background:var(--surface-soft)}.agenda-item{display:grid;grid-template-columns:86px 1fr;gap:14px;align-items:start}.date-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center}.date-card strong{display:block;font-size:24px;line-height:1}.date-card span{display:block;color:var(--muted);font-size:12px;margin-top:6px}.agenda-item h4,.supplier-card h4{margin:0 0 6px;font-size:14px}.agenda-item p,.supplier-card p,.category-item p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}.agenda-meta,.supplier-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.tag{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:700}.tag.blue{background:var(--blue-soft);color:var(--blue)}.tag.green{background:var(--green-soft);color:var(--green)}.tag.amber{background:var(--amber-soft);color:var(--amber)}.tag.violet{background:var(--violet-soft);color:var(--violet)}
+    .supplier-card{border:1px solid var(--line);background:#fff}.supplier-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.muted{color:var(--muted)}
+    @media (max-width:1260px){.hero,.grid-2,.grid-3,.grid-forms{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:920px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.main{padding:18px}}
+    @media (max-width:680px){.toolbar,.hero-grid,.stats,.form-grid.two{grid-template-columns:1fr}.hero-value{font-size:32px}.topbar h2{font-size:22px}.chart-wrap{height:260px}.agenda-item{grid-template-columns:1fr}}
+  html{scroll-behavior:smooth}
+    .section-block{display:block}
+    .hidden-section{display:none}
+</style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">M</div><div><h1>Movva Control</h1><p>Premium gratuito</p></div></div>
+      <nav class="menu">
+        <a class="active nav-link" href="#dashboard">📊 Visão geral</a>
+        <a class="nav-link" href="#financeiro">💰 Financeiro</a>
+        <a class="nav-link" href="#margem">📈 Lucro e margem</a>
+        <a class="nav-link" href="#fornecedores">🏭 Fornecedores</a>
+        <a class="nav-link" href="#categorias">🗂️ Categorias</a>
+        <a class="nav-link" href="#agenda">📅 Agenda</a>
+      </nav>
+      <nav class="menu-bottom"><a href="#">🔔 Alertas</a><a href="#">⚙️ Configurações</a></nav>
+      <div class="side-block"><h3>Painel premium</h3><p>Controle caixa, rentabilidade, fornecedores e compromissos em um único lugar, sem depender de mensalidade.</p><button>Ver tudo</button></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <h2>Central pessoal de operação</h2>
+        <p>Dashboard avançado para controlar dinheiro, margem, fornecedores e rotina com estrutura pronta para crescer sem custo mensal.</p>
+      </div>
+
+      <section class="toolbar">
+        <div class="control"><label>Período</label><select><option>Junho 2026</option><option>Maio 2026</option><option>Abril 2026</option></select></div>
+        <div class="control"><label>Conta principal</label><select><option>Conta principal</option><option>Reserva</option><option>Caixa</option></select></div>
+        <div class="control"><label>Meta de lucro %</label><input value="18" /></div>
+        <div class="control"><label>Limite de gastos</label><input value="18000" /></div>
+      </section>
+
+      <section id="dashboard" class="section-block hero">
+        <button class="btn secondary" onclick="showSection('financeiro')" style="margin-bottom:12px">Abrir Financeiro</button>
+        <div class="panel hero-main">
+          <h3>Resultado consolidado</h3>
+          <div class="hero-value" id="heroBalance">R$ 0,00</div>
+          <div class="hero-note">Acompanhe saldo, margem média, compromissos e fornecedores sem sair do mesmo painel.</div>
+          <div class="hero-grid">
+            <div class="hero-mini"><span>Entradas</span><strong id="heroIncome">R$ 0,00</strong></div>
+            <div class="hero-mini"><span>Saídas</span><strong id="heroExpense">R$ 0,00</strong></div>
+            <div class="hero-mini"><span>Lucro total</span><strong id="heroProfit">R$ 0,00</strong></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Leitura rápida</h3><p>O que está mais importante agora</p></div><span class="badge ok">Atualizado</span></div>
+          <div class="mini-list">
+            <div class="mini-item"><div><small>Margem média</small><strong id="avgMargin">0%</strong></div><span class="badge ok">Rentabilidade</span></div>
+            <div class="mini-item"><div><small>Fornecedores cadastrados</small><strong id="supplierCount">0</strong></div><span class="badge warn">Base</span></div>
+            <div class="mini-item"><div><small>Compromissos abertos</small><strong id="taskCount">0</strong></div><span class="badge risk">Agenda</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="stat blue"><span class="label">Saldo</span><div class="amount" id="balanceCard">R$ 0,00</div><div class="trend">Caixa do período</div></div>
+        <div class="stat green"><span class="label">Lucro</span><div class="amount" id="profitCard">R$ 0,00</div><div class="trend">Operações cadastradas</div></div>
+        <div class="stat red"><span class="label">Custos</span><div class="amount" id="costCard">R$ 0,00</div><div class="trend">Compras e despesas</div></div>
+        <div class="stat violet"><span class="label">Margem média</span><div class="amount" id="marginCard">0%</div><div class="trend">Rentabilidade consolidada</div></div>
+      </section>
+
+      <section id="financeiro" class="section-block grid-forms" style="margin-top:18px">
+        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Novo lançamento financeiro</h3><p>Entrada ou saída com origem, destino e categoria</p></div></div>
+          <form id="transactionForm" class="form-grid">
+            <div class="form-grid two"><input type="date" id="txDate" required><select id="txType"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></div>
+            <div class="form-grid two"><input id="txDescription" placeholder="Descrição" required><input id="txAmount" type="number" step="0.01" placeholder="Valor" required></div>
+            <div class="form-grid two"><input id="txSource" placeholder="De onde veio"><input id="txDestination" placeholder="Para onde foi"></div>
+            <div class="form-grid two"><select id="txCategory"></select><input id="txAccount" placeholder="Conta" value="Conta principal"></div>
+            <button class="btn primary" type="submit">Adicionar lançamento</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><div><h3>Nova operação com lucro</h3><p>Calcule margem com base no valor pago, compra e custos extras</p></div></div>
+          <form id="profitForm" class="form-grid">
+            <div class="form-grid two"><input type="date" id="pfDate" required><input id="pfAgency" placeholder="Órgão / cliente" required></div>
+            <div class="form-grid two"><input id="pfRevenue" type="number" step="0.01" placeholder="Quanto vai pagar" required><input id="pfPurchase" type="number" step="0.01" placeholder="Quanto comprou" required></div>
+            <div class="form-grid two"><input id="pfExtraCost" type="number" step="0.01" placeholder="Outros custos"><input id="pfSupplier" placeholder="Fornecedor principal"></div>
+            <button class="btn primary" type="submit">Calcular e adicionar</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="margem" class="section-block grid-forms" style="margin-top:18px">
+        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Novo fornecedor</h3><p>Cadastre os dados mais importantes para consulta rápida</p></div></div>
+          <form id="supplierForm" class="form-grid">
+            <div class="form-grid two"><input id="spName" placeholder="Nome da empresa" required><select id="spCategory"></select></div>
+            <div class="form-grid two"><input id="spContact" placeholder="Contato principal"><input id="spPhone" placeholder="Telefone / WhatsApp"></div>
+            <div class="form-grid two"><input id="spEmail" placeholder="E-mail"><input id="spCity" placeholder="Cidade / UF"></div>
+            <div class="form-grid two"><input id="spPayment" placeholder="Condição de pagamento"><input id="spDeadline" placeholder="Prazo médio"></div>
+            <textarea id="spNotes" rows="3" placeholder="Observações importantes"></textarea>
+            <button class="btn primary" type="submit">Adicionar fornecedor</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><div><h3>Nova categoria</h3><p>Crie categorias para usar em lançamentos e fornecedores</p></div></div>
+          <form id="categoryForm" class="form-grid">
+            <div class="form-grid two"><input id="ctName" placeholder="Nome da categoria" required><select id="ctType"><option value="financeiro">Financeiro</option><option value="fornecedor">Fornecedor</option></select></div>
+            <textarea id="ctDesc" rows="3" placeholder="Descrição opcional"></textarea>
+            <button class="btn primary" type="submit">Adicionar categoria</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="fornecedores" class="section-block grid-2" style="margin-top:18px">
+        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Evolução financeira</h3><p>Entradas, saídas e saldo acumulado</p></div><span class="chip">Dinâmico</span></div>
+          <div class="chart-wrap"><canvas id="financeChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Custos por categoria</h3><p>Visual do peso das despesas</p></div><span class="chip">Atualizado</span></div>
+          <div class="chart-wrap"><canvas id="expenseChart"></canvas></div>
+        </div>
+      </section>
+
+      <section id="categorias" class="section-block grid-3" style="margin-top:18px">
+        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Operações e margem</h3><p>Rentabilidade por venda</p></div><button class="btn secondary" id="clearProfits">Limpar</button></div>
+          <table><thead><tr><th>Data</th><th>Órgão</th><th>Lucro</th><th>Margem</th></tr></thead><tbody id="profitTable"></tbody></table>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Fornecedores</h3><p>Cadastro completo e rápido</p></div><button class="btn secondary" id="clearSuppliers">Limpar</button></div>
+          <div class="supplier-list" id="supplierList"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Categorias</h3><p>Financeiro e fornecedores</p></div><button class="btn secondary" id="clearCategories">Limpar</button></div>
+          <div class="category-list" id="categoryList"></div>
+        </div>
+      </section>
+
+      <section id="agenda" class="section-block grid-2" style="margin-top:18px">
+        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Lançamentos detalhados</h3><p>Origem, destino, conta e categoria</p></div><button class="btn secondary" id="clearTransactions">Limpar</button></div>
+          <table><thead><tr><th>Data</th><th>Descrição</th><th>Origem</th><th>Destino</th><th>Categoria</th><th>Valor</th></tr></thead><tbody id="transactionsTable"></tbody></table>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Agenda financeira</h3><p>Compromissos do dia a dia</p></div><button class="btn secondary" id="clearCommitments">Limpar</button></div>
+          <div class="agenda-list" id="commitmentsList"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const categories = [
+      {name:'Receita', type:'financeiro', desc:'Entradas principais'},
+      {name:'Operação', type:'financeiro', desc:'Compras e custos operacionais'},
+      {name:'Fixos', type:'financeiro', desc:'Despesas recorrentes'},
+      {name:'Informática', type:'fornecedor', desc:'Fornecedores de tecnologia'}
+    ];
+    const transactions = [
+      {date:'2026-06-20', description:'Recebimento principal', type:'entrada', amount:9800, source:'Órgão A', destination:'Conta principal', category:'Receita', account:'Conta principal'},
+      {date:'2026-06-19', description:'Compra de operação', type:'saida', amount:3200, source:'Conta principal', destination:'Fornecedor Alfa', category:'Operação', account:'Conta principal'},
+      {date:'2026-06-18', description:'Internet e ferramentas', type:'saida', amount:260, source:'Conta principal', destination:'Prestador', category:'Fixos', account:'Conta principal'}
+    ];
+    const profits = [
+      {date:'2026-06-20', agency:'Órgão A', revenue:9800, purchase:6400, extra:350, supplier:'Fornecedor Alfa'}
+    ];
+    const suppliers = [
+      {name:'Fornecedor Alfa', category:'Informática', contact:'Carlos', phone:'(61) 99999-0000', email:'alfa@email.com', city:'Brasília/DF', payment:'14 dias', deadline:'3 dias', notes:'Entrega rápida e bom preço'}
+    ];
+    const commitments = [
+      {date:'2026-06-23', title:'Pagar aluguel', action:'Separar valor e confirmar saldo disponível.', priority:'Alta', value:1800, area:'Financeiro'},
+      {date:'2026-06-28', title:'Fechamento do mês', action:'Comparar lucro, gastos e saldo do período.', priority:'Alta', value:0, area:'Rotina'}
+    ];
+
+    const money = v => 'R$ ' + Number(v || 0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const shortDate = d => new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
+    const dateParts = d => {const x=new Date(d+'T12:00:00'); return {day:x.toLocaleDateString('pt-BR',{day:'2-digit'}), label:x.toLocaleDateString('pt-BR',{month:'short', weekday:'short'})};};
+
+    const financeChart = new Chart(document.getElementById('financeChart'), {type:'line',data:{labels:[],datasets:[{label:'Saldo acumulado',data:[],borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.10)',fill:true,tension:.35,borderWidth:3,pointRadius:4},{label:'Entradas',data:[],borderColor:'#16a34a',tension:.35,borderWidth:2,pointRadius:3},{label:'Saídas',data:[],borderColor:'#dc2626',tension:.35,borderWidth:2,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8}}},scales:{y:{grid:{color:'#edf2f7'},ticks:{callback:(value)=>'R$ '+value.toLocaleString('pt-BR')}},x:{grid:{display:false}}}}});
+    const expenseChart = new Chart(document.getElementById('expenseChart'), {type:'doughnut',data:{labels:['Operação','Fixos','Outros'],datasets:[{data:[1,1,1],backgroundColor:['#2563eb','#16a34a','#dc2626'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:10,padding:18}}}}});
+
+    function refreshCategoryOptions(){
+      const finance = categories.filter(c=>c.type==='financeiro').map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+      const supplier = categories.filter(c=>c.type==='fornecedor').map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+      document.getElementById('txCategory').innerHTML = finance || '<option>Sem categoria</option>';
+      document.getElementById('spCategory').innerHTML = supplier || '<option>Sem categoria</option>';
+    }
+
+    function renderCategories(){
+      document.getElementById('categoryList').innerHTML = categories.map(c => `<div class="category-item"><h4 style="margin:0 0 6px">${c.name}</h4><p>${c.desc || 'Sem descrição'}</p><div class="agenda-meta"><span class="tag ${c.type==='financeiro'?'blue':'violet'}">${c.type}</span></div></div>`).join('');
+    }
+
+    function renderTransactions(){
+      const sorted=[...transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+      document.getElementById('transactionsTable').innerHTML = sorted.map(t => `<tr><td>${shortDate(t.date)}</td><td>${t.description}<br><span class="muted">${t.type}</span></td><td>${t.source || '—'}</td><td>${t.destination || '—'}</td><td>${t.category}</td><td>${money(t.amount)}</td></tr>`).join('');
+    }
+
+    function renderProfits(){
+      document.getElementById('profitTable').innerHTML = profits.map(p => {
+        const cost = Number(p.purchase||0) + Number(p.extra||0);
+        const profit = Number(p.revenue||0) - cost;
+        const margin = p.revenue ? (profit / p.revenue) * 100 : 0;
+        return `<tr><td>${shortDate(p.date)}</td><td>${p.agency}<br><span class="muted">${p.supplier || 'Sem fornecedor'}</span></td><td>${money(profit)}</td><td>${margin.toFixed(1)}%</td></tr>`;
+      }).join('');
+    }
+
+    function renderSuppliers(){
+      document.getElementById('supplierList').innerHTML = suppliers.map(s => `<div class="supplier-card"><div class="supplier-top"><div><h4>${s.name}</h4><p>${s.contact || 'Sem contato'} · ${s.phone || 'Sem telefone'}</p></div><span class="tag violet">${s.category}</span></div><div class="supplier-meta"><span class="tag blue">${s.city || 'Cidade não informada'}</span><span class="tag green">${s.payment || 'Pagamento não informado'}</span><span class="tag amber">${s.deadline || 'Prazo não informado'}</span></div><p style="margin-top:10px">${s.notes || 'Sem observações'}</p><p style="margin-top:8px"><strong>Email:</strong> ${s.email || '—'}</p></div>`).join('');
+      document.getElementById('supplierCount').textContent = suppliers.length;
+    }
+
+    function renderCommitments(){
+      const sorted=[...commitments].sort((a,b)=>new Date(a.date)-new Date(b.date));
+      document.getElementById('commitmentsList').innerHTML = sorted.map(c => { const p=dateParts(c.date); const tagClass=c.priority==='Alta'?'amber':c.priority==='Média'?'blue':'green'; return `<div class="agenda-item"><div class="date-card"><strong>${p.day}</strong><span>${p.label}</span></div><div><h4>${c.title}</h4><p>${c.action}</p><div class="agenda-meta"><span class="tag ${tagClass}">${c.priority}</span><span class="tag violet">${c.area}</span>${c.value?`<span class="tag blue">${money(c.value)}</span>`:''}</div></div></div>`; }).join('');
+      document.getElementById('taskCount').textContent = commitments.length;
+    }
+
+    function updateSummary(){
+      const income = transactions.filter(t=>t.type==='entrada').reduce((s,t)=>s+t.amount,0);
+      const expense = transactions.filter(t=>t.type==='saida').reduce((s,t)=>s+t.amount,0);
+      const balance = income - expense;
+      const totalCost = profits.reduce((s,p)=>s + Number(p.purchase||0) + Number(p.extra||0),0);
+      const totalProfit = profits.reduce((s,p)=>s + (Number(p.revenue||0) - Number(p.purchase||0) - Number(p.extra||0)),0);
+      const avgMargin = profits.length ? profits.reduce((s,p)=>{const profit=Number(p.revenue||0)-Number(p.purchase||0)-Number(p.extra||0);return s + (p.revenue ? (profit/p.revenue)*100 : 0);},0)/profits.length : 0;
+      document.getElementById('heroBalance').textContent = money(balance);
+      document.getElementById('heroIncome').textContent = money(income);
+      document.getElementById('heroExpense').textContent = money(expense);
+      document.getElementById('heroProfit').textContent = money(totalProfit);
+      document.getElementById('balanceCard').textContent = money(balance);
+      document.getElementById('profitCard').textContent = money(totalProfit);
+      document.getElementById('costCard').textContent = money(totalCost);
+      document.getElementById('marginCard').textContent = avgMargin.toFixed(1) + '%';
+      document.getElementById('avgMargin').textContent = avgMargin.toFixed(1) + '%';
+    }
+
+    function updateCharts(){
+      const sorted=[...transactions].sort((a,b)=>new Date(a.date)-new Date(b.date)); let running=0;
+      financeChart.data.labels = sorted.map(t=>shortDate(t.date));
+      financeChart.data.datasets[1].data = sorted.map(t=>t.type==='entrada'?t.amount:0);
+      financeChart.data.datasets[2].data = sorted.map(t=>t.type==='saida'?t.amount:0);
+      financeChart.data.datasets[0].data = sorted.map(t=>{running += t.type==='entrada'?t.amount:-t.amount; return running;});
+      financeChart.update();
+      const labels = categories.filter(c=>c.type==='financeiro' && c.name!=='Receita').map(c=>c.name);
+      const totals = labels.map(label => transactions.filter(t=>t.type==='saida' && t.category===label).reduce((s,t)=>s+t.amount,0));
+      expenseChart.data.labels = labels.length ? labels : ['Sem dados'];
+      expenseChart.data.datasets[0].data = totals.some(v=>v>0) ? totals : [1];
+      expenseChart.update();
+    }
+
+    function refresh(){refreshCategoryOptions();renderCategories();renderTransactions();renderProfits();renderSuppliers();renderCommitments();updateSummary();updateCharts();}
+
+    document.getElementById('transactionForm').addEventListener('submit', e => {e.preventDefault();transactions.push({date:txDate.value,type:txType.value,description:txDescription.value,amount:Number(txAmount.value),source:txSource.value,destination:txDestination.value,category:txCategory.value,account:txAccount.value});e.target.reset();txAccount.value='Conta principal';refresh();});
+    document.getElementById('profitForm').addEventListener('submit', e => {e.preventDefault();profits.push({date:pfDate.value,agency:pfAgency.value,revenue:Number(pfRevenue.value),purchase:Number(pfPurchase.value),extra:Number(pfExtraCost.value||0),supplier:pfSupplier.value});e.target.reset();refresh();});
+    document.getElementById('supplierForm').addEventListener('submit', e => {e.preventDefault();suppliers.push({name:spName.value,category:spCategory.value,contact:spContact.value,phone:spPhone.value,email:spEmail.value,city:spCity.value,payment:spPayment.value,deadline:spDeadline.value,notes:spNotes.value});e.target.reset();refresh();});
+    document.getElementById('categoryForm').addEventListener('submit', e => {e.preventDefault();categories.push({name:ctName.value,type:ctType.value,desc:ctDesc.value});e.target.reset();refresh();});
+    document.getElementById('clearTransactions').addEventListener('click', ()=>{transactions.length=0;refresh();});
+    document.getElementById('clearProfits').addEventListener('click', ()=>{profits.length=0;refresh();});
+    document.getElementById('clearSuppliers').addEventListener('click', ()=>{suppliers.length=0;refresh();});
+    document.getElementById('clearCategories').addEventListener('click', ()=>{categories.length=0;refresh();});
+    document.getElementById('clearCommitments').addEventListener('click', ()=>{commitments.length=0;refresh();});
+    refresh();
+
+    const navLinks = [...document.querySelectorAll('.nav-link')];
+    const blocks = {
+      dashboard: document.getElementById('dashboard'),
+      financeiro: document.getElementById('financeiro'),
+      margem: document.getElementById('margem'),
+      fornecedores: document.getElementById('fornecedores'),
+      categorias: document.getElementById('categorias'),
+      agenda: document.getElementById('agenda')
+    };
+    function showSection(name){
+      Object.entries(blocks).forEach(([k, el]) => { if (el) el.classList.toggle('hidden-section', k !== name); });
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + name));
+      const target = blocks[name]; if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      location.hash = name;
+    }
+    navLinks.forEach(a => a.addEventListener('click', e => { e.preventDefault(); showSection(a.getAttribute('href').slice(1)); }));
+    window.addEventListener('hashchange', () => { const h = location.hash.replace('#','') || 'dashboard'; if (blocks[h]) showSection(h); });
+    showSection(location.hash.replace('#','') || 'dashboard');
+  </script>
+</body>
+</html>
