@@ -48,18 +48,18 @@
         <a class="nav-link" href="#agenda">📅 Agenda</a>
       </nav>
       <nav class="menu-bottom"><a href="#">🔔 Alertas</a><a href="#">⚙️ Configurações</a></nav>
-      <div class="side-block"><h3>Painel premium</h3><p>Controle caixa, rentabilidade, fornecedores e compromissos em um único lugar.</p><button>Ver tudo</button></div>
+      <div class="side-block"><h3>Painel premium</h3><p>Controle caixa, rentabilidade, fornecedores e compromissos em um único lugar, sem depender de mensalidade.</p><button>Ver tudo</button></div>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <h2>Central pessoal de operação</h2>
-        <p>Dashboard para controlar dinheiro, margem, fornecedores e rotina.</p>
+        <p>Dashboard avançado para controlar dinheiro, margem, fornecedores e rotina com estrutura pronta para crescer sem custo mensal.</p>
       </div>
 
       <section class="toolbar">
-        <div class="control"><label>Período</label><select><option>Junho 2026</option><option>Maio 2026</option></select></div>
-        <div class="control"><label>Conta principal</label><select><option>Conta principal</option><option>Reserva</option></select></div>
+        <div class="control"><label>Período</label><select><option>Junho 2026</option><option>Maio 2026</option><option>Abril 2026</option></select></div>
+        <div class="control"><label>Conta principal</label><select><option>Conta principal</option><option>Reserva</option><option>Caixa</option></select></div>
         <div class="control"><label>Meta de lucro %</label><input value="18" /></div>
         <div class="control"><label>Limite de gastos</label><input value="18000" /></div>
       </section>
@@ -69,7 +69,7 @@
         <div class="panel hero-main">
           <h3>Resultado consolidado</h3>
           <div class="hero-value" id="heroBalance">R$ 0,00</div>
-          <div class="hero-note">Acompanje saldo, margem, compromissos e fornecedores.</div>
+          <div class="hero-note">Acompanje saldo, margem média, compromissos e fornecedores sem sair do mesmo painel.</div>
           <div class="hero-grid">
             <div class="hero-mini"><span>Entradas</span><strong id="heroIncome">R$ 0,00</strong></div>
             <div class="hero-mini"><span>Saídas</span><strong id="heroExpense">R$ 0,00</strong></div>
@@ -95,161 +95,7 @@
 
       <section id="financeiro" class="section-block grid-forms">
         <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Novo lançamento financeiro</h3><p>Entrada ou saída com origem, destino e categoria</p></div></div>
-          <form id="transactionForm" class="form-grid two">
-            <div class="form-grid two"><input type="date" id="txDate" required><select id="txType"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></div>
-            <div class="form-grid two"><input id="txDescription" placeholder="Descrição" required><input id="txAmount" type="number" step="0.01" placeholder="Valor" required></div>
-            <div class="form-grid two"><input id="txSource" placeholder="De onde veio"><input id="txDestination" placeholder="Para onde foi"></div>
-            <div class="form-grid two"><select id="txCategory"><option>Sem categoria</option></select><input id="txAccount" placeholder="Conta" value="Conta principal"></div>
-            <button class="btn primary" type="submit">Adicionar lançamento</button>
-          </form>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div><h3>Nova operação com lucro</h3><p>Calcule margem com base no valor pago, compra e custos extras</p></div></div>
-          <form id="profitForm" class="form-grid two">
-            <div class="form-grid two"><input type="date" id="pfDate" required><input id="pfAgency" placeholder="Órgão / cliente" required></div>
-            <div class="form-grid two"><input id="pfRevenue" type="number" step="0.01" placeholder="Quanto vai pagar" required><input id="pfPurchase" type="number" step="0.01" placeholder="Quanto comprou" required></div>
-            <div class="form-grid two"><input id="pfExtraCost" type="number" step="0.01" placeholder="Outros custos"><input id="pfSupplier" placeholder="Fornecedor principal"></div>
-            <button class="btn primary" type="submit">Calcular e adicionar</button>
-          </form>
-        </div>
-      </section>
-
-      <section id="margem" class="section-block grid-forms">
-        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Novo fornecedor</h3><p>Cadastre os dados mais importantes</p></div></div>
-          <form id="supplierForm" class="form-grid two">
-            <div class="form-grid two"><input id="spName" placeholder="Nome da empresa" required><select id="spCategory"><option>Sem categoria</option></select></div>
-            <div class="form-grid two"><input id="spContact" placeholder="Contato principal"><input id="spPhone" placeholder="Telefone"></div>
-            <div class="form-grid two"><input id="spEmail" placeholder="E-mail"><input id="spCity" placeholder="Cidade / UF"></div>
-            <textarea id="spNotes" rows="3" placeholder="Observações importantes" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px"></textarea>
-            <button class="btn primary" type="submit">Adicionar fornecedor</button>
-          </form>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div><h3>Nova categoria</h3><p>Crie categorias para lançamentos</p></div></div>
-          <form id="categoryForm" class="form-grid two">
-            <div class="form-grid two"><input id="ctName" placeholder="Nome da categoria" required><select id="ctType"><option value="financeiro">Financeiro</option><option value="fornecedor">Fornecedor</option></select></div>
-            <textarea id="ctDesc" rows="3" placeholder="Descrição opcional" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px"></textarea>
-            <button class="btn primary" type="submit">Adicionar categoria</button>
-          </form>
-        </div>
-      </section>
-
-      <section id="fornecedores" class="section-block grid-2">
-        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Evolução financeira</h3><p>Entradas, saídas e saldo acumulado</p></div></div>
-          <div class="chart-wrap"><canvas id="financeChart"></canvas></div>
-        </div>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Categorias de despesas</h3><p>Visual do peso das despesas</p></div></div>
-          <div class="chart-wrap"><canvas id="expenseChart"></canvas></div>
-        </div>
-      </section>
-
-      <section id="categorias" class="section-block grid-3">
-        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Categorias</h3><p>Financeiro e fornecedores</p></div></div>
-          <div class="category-list" id="categoryList"></div>
-        </div>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Lançamentos</h3><p>Origem, destino e categoria</p></div></div>
-          <table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th></tr></thead><tbody id="transactionsTable"></tbody></table>
-        </div>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Fornecedores</h3><p>Cadastro completo</p></div></div>
-          <div class="supplier-list" id="supplierList"></div>
-        </div>
-      </section>
-
-      <section id="agenda" class="section-block grid-2">
-        <button class="btn secondary" onclick="showSection('dashboard')" style="margin-bottom:12px">Voltar ao resumo</button>
-        <div class="panel">
-          <div class="panel-head"><div><h3>Agenda financeira</h3><p>Compromissos do dia a dia</p></div></div>
-          <div class="agenda-list" id="commitmentsList"></div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    const categories = [
-      {name:'Receita', type:'financeiro', desc:'Entradas principais'},
-      {name:'Operação', type:'financeiro', desc:'Compras e custos operacionais'},
-      {name:'Fixos', type:'financeiro', desc:'Despesas recorrentes'}
-    ];
-    const transactions = [
-      {date:'2026-06-20', description:'Recebimento principal', type:'entrada', amount:9800, source:'Órgão A', destination:'Conta principal', category:'Receita', account:'Conta principal'},
-      {date:'2026-06-19', description:'Compra de operação', type:'saida', amount:3200, source:'Conta principal', destination:'Fornecedor Alfa', category:'Operação', account:'Conta principal'}
-    ];
-    const suppliers = [];
-    const commitments = [];
-    const money = v => 'R$ ' + Number(v || 0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-    const shortDate = d => new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
-    const navLinks = [...document.querySelectorAll('.nav-link')];
-    const blocks = {
-      dashboard: document.getElementById('dashboard'),
-      financeiro: document.getElementById('financeiro'),
-      margem: document.getElementById('margem'),
-      fornecedores: document.getElementById('fornecedores'),
-      categorias: document.getElementById('categorias'),
-      agenda: document.getElementById('agenda')
-    };
-    function showSection(name){
-      Object.entries(blocks).forEach(([k, el]) => { if (el) el.classList.toggle('hidden-section', k !== name); });
-      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + name));
-      const target = blocks[name]; if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
-      location.hash = name;
-    }
-    navLinks.forEach(a => a.addEventListener('click', e => { e.preventDefault(); showSection(a.getAttribute('href').slice(1)); }));
-    window.addEventListener('hashchange', () => { const h = location.hash.replace('#','') || 'dashboard'; if (blocks[h]) showSection(h); });
-    showSection(location.hash.replace('#','') || 'dashboard');
-    function refreshCategoryOptions(){
-      document.getElementById('txCategory').innerHTML = categories.filter(c=>c.type==='financeiro').map(c=>`<option value="${c.name}">${c.name}</option>`).join('') || '<option>Sem categoria</option>';
-      document.getElementById('spCategory').innerHTML = categories.filter(c=>c.type==='fornecedor').map(c=>`<option value="${c.name}">${c.name}</option>`).join('') || '<option>Sem categoria</option>';
-    }
-    function renderCategories(){
-      document.getElementById('categoryList').innerHTML = categories.map(c => `<div class="category-item"><h4>${c.name}</h4><p>${c.desc}</p><span class="tag ${c.type==='financeiro'?'blue':'violet'}">${c.type}</span></div>`).join('');
-    }
-    function renderTransactions(){
-      document.getElementById('transactionsTable').innerHTML = transactions.map(t => `<tr><td>${shortDate(t.date)}</td><td>${t.description}<br><span class="muted">${t.type}</span></td><td>${t.category}</td><td>${money(t.amount)}</td></tr>`).join('');
-    }
-    function renderSuppliers(){
-      document.getElementById('supplierList').innerHTML = suppliers.map(s => `<div class="supplier-card"><h4>${s.name}</h4><p>${s.contact || '—'} · ${s.phone || '—'}</p><p>${s.city || '—'}</p><p>${s.email || '—'}</p></div>`).join('');
-      document.getElementById('supplierCount').textContent = suppliers.length;
-    }
-    function renderCommitments(){
-      document.getElementById('commitmentsList').innerHTML = commitments.map(c => `<div class="agenda-item"><div class="date-card"><strong>${c.date}</strong></div><h4>${c.title}</h4><p>${c.action}</p></div>`).join('');
-      document.getElementById('taskCount').textContent = commitments.length;
-    }
-    function updateSummary(){
-      const income = transactions.filter(t=>t.type==='entrada').reduce((s,t)=>s+t.amount,0);
-      const expense = transactions.filter(t=>t.type==='saida').reduce((s,t)=>s+t.amount,0);
-      const balance = income - expense;
-      document.getElementById('heroBalance').textContent = money(balance);
-      document.getElementById('heroIncome').textContent = money(income);
-      document.getElementById('heroExpense').textContent = money(expense);
-      document.getElementById('heroProfit').textContent = money(0);
-      document.getElementById('balanceCard').textContent = money(balance);
-      document.getElementById('profitCard').textContent = money(0);
-      document.getElementById('costCard').textContent = money(expense);
-    }
-    function updateCharts(){
-      const financeChart = new Chart(document.getElementById('financeChart'), {type:'line',data:{labels:[],datasets:[{label:'Saldo',data:[],borderColor:'#2563eb',fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-      const expenseChart = new Chart(document.getElementById('expenseChart'), {type:'doughnut',data:{labels:[],datasets:[{data:[],backgroundColor:['#2563eb','#16a34a','#dc2626']}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}}});
-      financeChart.update(); expenseChart.update();
-    }
-    function refresh(){refreshCategoryOptions();renderCategories();renderTransactions();renderSuppliers();renderCommitments();updateSummary();updateCharts();}
-    document.getElementById('transactionForm').addEventListener('submit', e => {e.preventDefault();transactions.push({date:txDate.value,type:txType.value,description:txDescription.value,amount:Number(txAmount.value),source:txSource.value,destination:txDestination.value,category:txCategory.value,account:txAccount.value});e.target.reset();refresh();});
-    document.getElementById('supplierForm').addEventListener('submit', e => {e.preventDefault();suppliers.push({name:spName.value,category:spCategory.value,contact:spContact.value,phone:spPhone.value,email:spEmail.value,city:spCity.value,notes:spNotes.value});e.target.reset();refresh();});
-    document.getElementById('categoryForm').addEventListener('submit', e => {e.preventDefault();categories.push({name:ctName.value,type:ctType.value,desc:ctDesc.value||'Sem descrição'});e.target.reset();refresh();});
-    refresh();
-  </script>
-</body>
-</html>
+        <div
+</parameter>
+</function>
+</tool_call>
