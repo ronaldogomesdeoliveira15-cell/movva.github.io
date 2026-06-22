@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movva Dashboard</title>
+<style>
+:root{--bg:#0b1220;--panel:#111a2e;--panel2:#0f172a;--line:#22304d;--text:#e5eefc;--muted:#98a7c2;--accent:#4ade80;--accent2:#38bdf8;--warn:#f59e0b;--danger:#ef4444;--radius:18px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#08111f 0,#0b1220 100%);color:var(--text)}
+a{color:inherit;text-decoration:none}
+.app{display:flex;min-height:100vh}.sidebar{width:280px;background:rgba(8,15,28,.96);border-right:1px solid var(--line);padding:18px 14px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;padding:10px 10px 18px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#22c55e,#06b6d4);display:grid;place-items:center;font-weight:800;color:#fff}.brand h1{font-size:20px;margin:0}.brand small{display:block;color:var(--muted)}.nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}.nav a{padding:12px 14px;border-radius:14px;color:var(--text);display:flex;align-items:center;gap:10px}.nav a.active,.nav a:hover{background:#17233d}.main{flex:1;padding:22px;max-width:calc(100vw - 280px)}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.title h2{margin:0;font-size:28px}.title p{margin:6px 0 0;color:var(--muted)}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#14213a;color:var(--text);padding:11px 16px;border-radius:14px;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#2563eb,#06b6d4);border:none}.grid{display:grid;gap:16px}.cards{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}.card,.panel{background:rgba(17,26,46,.96);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.18)}.card{padding:18px}.card small,.panel small{color:var(--muted)}.card strong{display:block;font-size:28px;margin-top:10px}.panels{grid-template-columns:1.2fr .8fr}.panel{padding:18px}.panel h3{margin:0 0 10px}.list{display:grid;gap:10px;margin-top:10px}.item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:14px;background:#0d1628;border:1px solid #1f2c47}.section{margin-top:18px}.table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:14px}.table th,.table td{padding:12px 10px;border-bottom:1px solid #1f2c47;text-align:left}.badge{padding:6px 10px;border-radius:999px;font-size:12px}.ok{background:#123524;color:#9ef0ba}.warn{background:#3a2b10;color:#ffd38a}.danger{background:#3a1515;color:#ffb2b2}.menu-title{margin:18px 10px 8px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+@media (max-width:1100px){.app{flex-direction:column}.sidebar{width:100%;height:auto;position:relative}.main{max-width:none}.cards,.panels{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.cards,.panels{grid-template-columns:1fr}.main{padding:14px}.title h2{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">M</div>
+    <div><h1>Movva Dashboard</h1><small>Painel de controle</small></div>
+  </div>
+  <div class="menu-title">Menu</div>
+  <nav class="nav">
+    <a class="active" href="#inicio">Visão geral</a>
+    <a href="#financeiro">Financeiro</a>
+    <a href="#lucro">Lucro e margem</a>
+    <a href="#fornecedores">Fornecedores</a>
+    <a href="#categorias">Categorias</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#alertas">Alertas</a>
+  </nav>
+</aside>
+<main class="main">
+  <header class="topbar" id="inicio">
+    <div class="title">
+      <h2>Movva Dashboard</h2>
+      <p>Interface limpa para abrir direto no navegador e editar depois sem bagunça.</p>
+    </div>
+    <div class="actions">
+      <button class="btn">Exportar</button>
+      <button class="btn primary">Novo lançamento</button>
+    </div>
+  </header>
+  <section class="grid cards">
+    <div class="card"><small>Saldo atual</small><strong>R$ 128.450,00</strong><span class="badge ok">+12,4%</span></div>
+    <div class="card"><small>Entradas</small><strong>R$ 82.000,00</strong><span class="badge ok">Este mês</span></div>
+    <div class="card"><small>Saídas</small><strong>R$ 34.900,00</strong><span class="badge warn">Controlado</span></div>
+    <div class="card"><small>Lucro</small><strong>R$ 47.100,00</strong><span class="badge ok">Positivo</span></div>
+  </section>
+  <section class="grid panels">
+    <div class="panel" id="financeiro">
+      <h3>Resumo financeiro</h3>
+      <small>Entradas, saídas e saldo organizados em um bloco único.</small>
+      <div class="list">
+        <div class="item"><span>Faturamento do mês</span><strong>R$ 82.000,00</strong></div>
+        <div class="item"><span>Despesas fixas</span><strong>R$ 18.400,00</strong></div>
+        <div class="item"><span>Despesas variáveis</span><strong>R$ 16.500,00</strong></div>
+      </div>
+    </div>
+    <div class="panel" id="lucro">
+      <h3>Lucro e margem</h3>
+      <small>Visão rápida da rentabilidade.</small>
+      <div class="list">
+        <div class="item"><span>Lucro líquido</span><strong>R$ 47.100,00</strong></div>
+        <div class="item"><span>Margem média</span><strong>57,4%</strong></div>
+        <div class="item"><span>Status</span><span class="badge ok">Saudável</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="grid panels section">
+    <div class="panel" id="fornecedores">
+      <h3>Fornecedores</h3>
+      <table class="table">
+        <tr><th>Nome</th><th>Contato</th><th>Status</th></tr>
+        <tr><td>Fornecedor A</td><td>(00) 0000-0000</td><td><span class="badge ok">Ativo</span></td></tr>
+        <tr><td>Fornecedor B</td><td>(00) 0000-0000</td><td><span class="badge warn">Pendente</span></td></tr>
+        <tr><td>Fornecedor C</td><td>(00) 0000-0000</td><td><span class="badge danger">Inativo</span></td></tr>
+      </table>
+    </div>
+    <div class="panel" id="categorias">
+      <h3>Categorias</h3>
+      <div class="list">
+        <div class="item"><span>Financeiro</span><strong>18</strong></div>
+        <div class="item"><span>Operacional</span><strong>11</strong></div>
+        <div class="item"><span>Projetos</span><strong>7</strong></div>
+      </div>
+    </div>
+  </section>
+  <section class="grid panels section">
+    <div class="panel" id="agenda">
+      <h3>Agenda</h3>
+      <div class="list">
+        <div class="item"><span>Reunião com fornecedor</span><small>Hoje 14:00</small></div>
+        <div class="item"><span>Fechamento financeiro</span><small>Amanhã</small></div>
+        <div class="item"><span>Revisão de margem</span><small>sexta</small></div>
+      </div>
+    </div>
+    <div class="panel" id="alertas">
+      <h3>Alertas</h3>
+      <div class="list">
+        <div class="item"><span>2 pagamentos vencendo</span><span class="badge warn">Atenção</span></div>
+        <div class="item"><span>1 fornecedor sem validação</span><span class="badge danger">Urgente</span></div>
+        <div class="item"><span>Caixa positivo</span><span class="badge ok">Ok</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+</body>
+</html>
